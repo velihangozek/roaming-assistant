@@ -1,0 +1,6 @@
+pack_id,name,coverage,coverage_type,data_gb,voice_min,sms,price,validity_days,currency
+201,Avrupa 5GB,Europe,region,5,50,50,19.9,7,EUR
+202,Avrupa 10GB,Europe,region,10,100,100,29.9,14,EUR
+203,Dünya 3GB,Global,region,3,30,30,34.9,10,USD
+204,ABD 5GB,US,country,5,50,50,24.9,10,USD
+205,BAE 3GB,AE,country,3,30,30,22.9,7,USD

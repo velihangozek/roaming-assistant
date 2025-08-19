@@ -1,0 +1,6 @@
+country_code,data_per_mb,voice_per_min,sms_per_msg,currency
+DE,0.10,0.45,0.20,EUR
+US,0.15,0.60,0.25,USD
+AE,0.18,0.75,0.30,USD
+GR,0.09,0.40,0.18,EUR
+EG,0.14,0.70,0.28,USD
