@@ -1,0 +1,52 @@
+country_code,country_name,region
+TR,Türkiye,Europe
+DE,Almanya,Europe
+GR,Yunanistan,Europe
+FR,Fransa,Europe
+IT,İtalya,Europe
+ES,İspanya,Europe
+GB,İngiltere,Europe
+NL,Hollanda,Europe
+AT,Avusturya,Europe
+CH,İsviçre,Europe
+SE,İsveç,Europe
+NO,Norveç,Europe
+DK,Danimarka,Europe
+FI,Finlandiya,Europe
+BE,Belçika,Europe
+PT,Portekiz,Europe
+CZ,Çekya,Europe
+PL,Polonya,Europe
+US,Amerika Birleşik Devletleri,North America
+CA,Kanada,North America
+MX,Meksika,North America
+AE,Birleşik Arap Emirlikleri,Middle East
+SA,Suudi Arabistan,Middle East
+QA,Katar,Middle East
+KW,Kuveyt,Middle East
+BH,Bahreyn,Middle East
+OM,Umman,Middle East
+JO,Ürdün,Middle East
+LB,Lübnan,Middle East
+EG,Mısır,Africa
+ZA,Güney Afrika,Africa
+MA,Fas,Africa
+TN,Tunus,Africa
+KE,Kenya,Africa
+NG,Nijerya,Africa
+JP,Japonya,Asia-Pacific
+KR,Güney Kore,Asia-Pacific
+CN,Çin,Asia-Pacific
+SG,Singapur,Asia-Pacific
+MY,Malezya,Asia-Pacific
+TH,Tayland,Asia-Pacific
+VN,Vietnam,Asia-Pacific
+ID,Endonezya,Asia-Pacific
+PH,Filipinler,Asia-Pacific
+IN,Hindistan,Asia-Pacific
+AU,Avustralya,Asia-Pacific
+NZ,Yeni Zelanda,Asia-Pacific
+BR,Brezilya,South America
+AR,Arjantin,South America
+CL,Şili,South America
+CO,Kolombiya,South America
