@@ -1,0 +1,11 @@
+user_id,avg_daily_mb,avg_daily_min,avg_daily_sms,profile_description
+1001,800,45,5,İş Seyahati - Moderate data many calls few SMS
+1002,1500,15,3,Tatil - High data photos/maps moderate calls few SMS
+1003,1200,25,8,Öğrenci - High data moderate calls moderate SMS
+1004,2000,8,15,Sosyal Medya - Very high data few calls many SMS
+1005,200,5,1,Minimal Kullanım - Low data few calls very few SMS
+1006,3500,10,2,Video Streaming - Extremely high data few calls few SMS
+1007,600,120,12,Çok Konuşan - Moderate data very high calls moderate SMS
+1008,1800,20,10,Fotoğraf Paylaşımı - High data moderate calls moderate SMS
+1009,2500,15,3,Oyuncu - Very high data few calls few SMS
+1010,1600,30,20,Blogger - High data moderate calls high SMS

@@ -1,0 +1,49 @@
+pack_id,name,coverage,coverage_type,data_gb,voice_min,sms,price,validity_days,currency
+201,Avrupa Basic 2GB,Avrupa,region,2,30,30,12.9,3,EUR
+202,Avrupa Standard 5GB,Avrupa,region,5,50,50,19.9,7,EUR
+203,Avrupa Plus 10GB,Avrupa,region,10,100,100,29.9,14,EUR
+204,Avrupa Premium 20GB,Avrupa,region,20,200,200,49.9,30,EUR
+205,Avrupa Ultra 50GB,Avrupa,region,50,500,500,89.9,30,EUR
+301,Amerika Basic 3GB,Kuzey Amerika,region,3,40,40,24.9,7,USD
+302,Amerika Standard 5GB,Kuzey Amerika,region,5,60,60,34.9,10,USD
+303,Amerika Plus 10GB,Kuzey Amerika,region,10,120,120,54.9,14,USD
+304,Amerika Premium 25GB,Kuzey Amerika,region,25,300,300,89.9,30,USD
+401,Orta Doğu Basic 2GB,Orta Doğu,region,2,25,25,19.9,5,USD
+402,Orta Doğu Standard 4GB,Orta Doğu,region,4,40,40,27.9,10,USD
+403,Orta Doğu Plus 8GB,Orta Doğu,region,8,80,80,44.9,14,USD
+404,Orta Doğu Premium 15GB,Orta Doğu,region,15,150,150,69.9,30,USD
+501,Afrika Basic 1GB,Afrika,region,1,20,20,14.9,3,USD
+502,Afrika Standard 3GB,Afrika,region,3,35,35,22.9,7,USD
+503,Afrika Plus 6GB,Afrika,region,6,70,70,37.9,14,USD
+504,Afrika Premium 12GB,Afrika,region,12,140,140,59.9,30,USD
+601,Asya Basic 2GB,Asya-Pasifik,region,2,25,25,29.9,5,USD
+602,Asya Standard 4GB,Asya-Pasifik,region,4,45,45,44.9,10,USD
+603,Asya Plus 8GB,Asya-Pasifik,region,8,90,90,69.9,14,USD
+604,Asya Premium 15GB,Asya-Pasifik,region,15,180,180,109.9,30,USD
+701,Güney Amerika Basic 2GB,Güney Amerika,region,2,30,30,24.9,5,USD
+702,Güney Amerika Standard 5GB,Güney Amerika,region,5,60,60,39.9,10,USD
+703,Güney Amerika Plus 10GB,Güney Amerika,region,10,120,120,64.9,14,USD
+801,Dünya Express 1GB,Tüm Dünya,region,1,15,15,19.9,3,USD
+802,Dünya Basic 3GB,Tüm Dünya,region,3,30,30,34.9,7,USD
+803,Dünya Standard 6GB,Tüm Dünya,region,6,60,60,54.9,10,USD
+804,Dünya Plus 12GB,Tüm Dünya,region,12,120,120,89.9,14,USD
+805,Dünya Premium 25GB,Tüm Dünya,region,25,250,250,149.9,30,USD
+806,Dünya Ultra 50GB,Tüm Dünya,region,50,500,500,249.9,30,USD
+901,ABD Express 3GB,US,country,3,40,40,19.9,5,USD
+902,ABD Standard 5GB,US,country,5,60,60,24.9,7,USD
+903,ABD Plus 10GB,US,country,10,120,120,39.9,14,USD
+1001,Almanya Express 2GB,DE,country,2,30,30,14.9,3,EUR
+1002,Almanya Standard 5GB,DE,country,5,50,50,19.9,7,EUR
+1003,Almanya Plus 10GB,DE,country,10,100,100,34.9,14,EUR
+1101,İngiltere Express 2GB,GB,country,2,30,30,17.9,3,GBP
+1102,İngiltere Standard 5GB,GB,country,5,50,50,24.9,7,GBP
+1103,İngiltere Plus 10GB,GB,country,10,100,100,39.9,14,GBP
+1201,BAE Express 2GB,AE,country,2,25,25,22.9,3,USD
+1202,BAE Standard 4GB,AE,country,4,40,40,34.9,7,USD
+1203,BAE Plus 8GB,AE,country,8,80,80,54.9,14,USD
+1301,Japonya Express 1GB,JP,country,1,20,20,29.9,3,USD
+1302,Japonya Standard 3GB,JP,country,3,40,40,49.9,7,USD
+1303,Japonya Plus 6GB,JP,country,6,80,80,79.9,14,USD
+1401,Avustralya Express 2GB,AU,country,2,25,25,32.9,3,USD
+1402,Avustralya Standard 4GB,AU,country,4,50,50,52.9,7,USD
+1403,Avustralya Plus 8GB,AU,country,8,100,100,84.9,14,USD

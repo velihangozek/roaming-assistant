@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turkcell Roaming Asistanı</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zbpD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-transition">
+    <!-- Header -->
+    <header class="turkcell-header">
+        <div class="container-fluid">
+            <div class="header-content">
+                <div class="brand-section">
+                    <img src="./public/AMBLEM_SARI.png" alt="Turkcell Logo" class="brand-logo" id="bannerLogo">
+                    <div class="brand-text">
+                        <h1 class="header-title">Roaming Asistanı</h1>
+                        <p class="header-subtitle">Seyahate Göre En Ekonomik Çözümü Keşfedin</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline-light btn-sm me-2" onclick="goToHome()" style="display: none;" id="homeButton">
+                        <i class="fas fa-home me-1"></i>Ana Sayfa
+                    </button>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Tema Değiştir">
+                        <i class="fas fa-sun" id="theme-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <div class="container-fluid">
+            <div class="row g-4">
+                <!-- Sidebar -->
+                <div class="col-lg-4 col-xl-3">
+                    <div class="sidebar-container">
+                        <div class="control-card">
+                            <div class="card-header-modern">
+                                <div class="card-icon user-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h5 class="card-title-modern">Kullanıcı Seçimi</h5>
+                            </div>
+                            <div class="card-body-modern">
+                                <select class="form-select-modern" id="userSelect">
+                                    <option value="">Kullanıcı Seçin</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-card">
+                            <div class="card-header-modern">
+                                <div class="card-icon travel-icon">
+                                    <i class="fas fa-globe-americas"></i>
+                                </div>
+                                <h5 class="card-title-modern">Seyahat Planı</h5>
+                                <p class="card-subtitle-modern">Çoklu ülke seyahati ekleyin</p>
+                            </div>
+                            <div class="card-body-modern">
+                                <div id="tripPlanner" class="trip-planner-container">
+                                    <div class="trip-input-section">
+                                        <div class="form-group-modern">
+                                            <label class="form-label-modern">
+                                                <i class="fas fa-map-marker-alt me-1"></i>Ülke Seçin
+                                            </label>
+                                            <select class="form-select-modern" id="countrySelect">
+                                                <option value="">Ülke Seçin</option>
+                                            </select>
+                                        </div>
+                                        <div class="date-range-container">
+                                            <div class="form-group-modern">
+                                                <label class="form-label-modern">
+                                                    <i class="fas fa-calendar-check me-1"></i>Başlangıç Tarihi
+                                                </label>
+                                                <div class="date-input-wrapper">
+                                                    <input type="text" class="form-control-modern date-picker" id="startDate" placeholder="Tarih seçin..." readonly>
+                                                    <i class="fas fa-calendar-alt date-input-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-modern">
+                                                <label class="form-label-modern">
+                                                    <i class="fas fa-calendar-times me-1"></i>Bitiş Tarihi
+                                                </label>
+                                                <div class="date-input-wrapper">
+                                                    <input type="text" class="form-control-modern date-picker" id="endDate" placeholder="Tarih seçin..." readonly>
+                                                    <i class="fas fa-calendar-alt date-input-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn-modern btn-add" onclick="addTrip()">
+                                            <i class="fas fa-plus me-2"></i>Seyahate Ekle
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div id="tripList" class="trip-list-modern">
+                                    <div class="trip-list-header" style="display: none;">
+                                        <h6 class="trip-list-title">
+                                            <i class="fas fa-route me-2"></i>Seyahat Rotanız
+                                        </h6>
+                                        <span class="trip-count-badge">0 Ülke</span>
+                                    </div>
+                                    <div class="trip-items-container"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-card">
+                            <div class="card-header-modern">
+                                <div class="card-icon usage-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h5 class="card-title-modern">Kullanım Profili</h5>
+                            </div>
+                            <div class="card-body-modern">
+                                <div class="form-group-modern">
+                                    <label class="form-label-modern">Günlük Data (MB)</label>
+                                    <input type="number" class="form-control-modern" id="dailyMB" value="600" min="1" max="10000">
+                                </div>
+                                <div class="form-group-modern">
+                                    <label class="form-label-modern">Günlük Arama (Dakika)</label>
+                                    <input type="number" class="form-control-modern" id="dailyMin" value="10" min="0" max="500">
+                                </div>
+                                <div class="form-group-modern">
+                                    <label class="form-label-modern">Günlük SMS</label>
+                                    <input type="number" class="form-control-modern" id="dailySMS" value="2" min="0" max="100">
+                                </div>
+                                <button type="button" class="btn-modern btn-primary" onclick="calculateRecommendations()">
+                                    <i class="fas fa-calculator me-2"></i>Hesapla ve Önerileri Gör
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-lg-8 col-xl-9">
+                    <div class="content-container">
+                        <!-- Trip Summary -->
+                        <div id="tripSummary" class="summary-cards" style="display: none;">
+                            <div class="summary-card duration-card">
+                                <div class="summary-icon">
+                                    <i class="fas fa-calendar-days"></i>
+                                </div>
+                                <div class="summary-content">
+                                    <div class="summary-label">Seyahat Süresi</div>
+                                    <div class="summary-value" id="totalDays">0</div>
+                                    <div class="summary-unit">Gün</div>
+                                </div>
+                                <div class="summary-trend positive">
+                                    <i class="fas fa-route"></i>
+                                    <span id="countryCount">0 Ülke</span>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-card data-card">
+                                <div class="summary-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="summary-content">
+                                    <div class="summary-label">Toplam Data İhtiyacı</div>
+                                    <div class="summary-value" id="totalData">0</div>
+                                    <div class="summary-unit">GB</div>
+                                </div>
+                                <div class="summary-breakdown">
+                                    <div class="breakdown-item">
+                                        <span>Günlük:</span>
+                                        <span id="dailyUsage">600 MB</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-card usage-card">
+                                <div class="summary-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="summary-content">
+                                    <div class="summary-label">Kullanım Profili</div>
+                                    <div class="usage-breakdown">
+                                        <div class="usage-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span id="totalVoice">0 dk</span>
+                                        </div>
+                                        <div class="usage-item">
+                                            <i class="fas fa-sms"></i>
+                                            <span id="totalSMS">0 SMS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-card cost-card">
+                                <div class="summary-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="summary-content">
+                                    <div class="summary-label">En Uygun Fiyat</div>
+                                    <div class="summary-value price-value" id="estimatedCost">₺0</div>
+                                    <div class="summary-unit">TL</div>
+                                </div>
+                                <div class="summary-trend savings">
+                                    <i class="fas fa-piggy-bank"></i>
+                                    <span id="savingsAmount">Tasarruf hesaplanıyor...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div id="recommendationsSection" class="recommendations-section" style="display: none;">
+                            <div class="section-header">
+                                <h2 class="section-title">
+                                    <i class="fas fa-lightbulb me-2"></i>Size Özel Önerilerimiz
+                                </h2>
+                                <p class="section-subtitle">En uygun roaming çözümlerini karşılaştırın</p>
+                            </div>
+                            <div id="recommendations" class="recommendations-grid"></div>
+                        </div>
+
+                        <!-- Simulation Panel -->
+                        <div id="simulationPanel" class="simulation-panel" style="display: none;">
+                            <div class="section-header">
+                                <h2 class="section-title">
+                                    <i class="fas fa-cogs me-2"></i>Detaylı Maliyet Analizi
+                                </h2>
+                            </div>
+                            <div id="simulationResults"></div>
+                        </div>
+
+                        <!-- Loading -->
+                        <div id="loadingSpinner" class="loading-container" style="display: none;">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                            <h3 class="loading-title">Hesaplanıyor...</h3>
+                            <p class="loading-subtitle">En uygun roaming paketleri analiz ediliyor</p>
+    </div>
+
+                        <!-- Welcome Message -->
+                        <div id="welcomeMessage" class="welcome-container">
+                            <div class="welcome-content">
+                                <div class="welcome-icon">
+                                    <i class="fas fa-globe-americas"></i>
+                                </div>
+                                <h2 class="welcome-title">Turkcell Roaming Asistanı</h2>
+                                <p class="welcome-subtitle">Seyahat planınızı girin, size en uygun ve ekonomik roaming çözümünü bulalım</p>
+                                <div class="welcome-features">
+                                    <div class="feature-item">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Akıllı Maliyet Hesaplama</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Sürpriz Ücret Koruması</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Detaylı Karşılaştırma</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Flatpickr Turkish Locale -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

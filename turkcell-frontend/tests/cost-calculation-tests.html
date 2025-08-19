@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turkcell Roaming Assistant - Test Suite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .test-passed { background-color: #d4edda; }
+        .test-failed { background-color: #f8d7da; }
+        .test-result { padding: 10px; margin: 5px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Turkcell Roaming Assistant - Test Suite</h1>
+        <div id="test-results"></div>
+        <button class="btn btn-primary" onclick="runAllTests()">Tüm Testleri Çalıştır</button>
+    </div>
+
+    <script src="../app.js"></script>
+    <script>
+        // Test Framework
+        class TestRunner {
+            constructor() {
+                this.tests = [];
+                this.results = [];
+            }
+
+            addTest(name, testFunction) {
+                this.tests.push({ name, testFunction });
+            }
+
+            async runAllTests() {
+                this.results = [];
+                for (const test of this.tests) {
+                    try {
+                        await test.testFunction();
+                        this.results.push({ name: test.name, status: 'PASSED', error: null });
+                    } catch (error) {
+                        this.results.push({ name: test.name, status: 'FAILED', error: error.message });
+                    }
+                }
+                this.displayResults();
+            }
+
+            displayResults() {
+                const container = document.getElementById('test-results');
+                const passed = this.results.filter(r => r.status === 'PASSED').length;
+                const total = this.results.length;
+                
+                let html = `
+                    <div class="alert alert-info mb-4">
+                        <h4>Test Sonuçları: ${passed}/${total} BAŞARILI</h4>
+                    </div>
+                `;
+
+                this.results.forEach(result => {
+                    const cssClass = result.status === 'PASSED' ? 'test-passed' : 'test-failed';
+                    html += `
+                        <div class="test-result ${cssClass}">
+                            <strong>${result.status}</strong>: ${result.name}
+                            ${result.error ? `<br><small>Hata: ${result.error}</small>` : ''}
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            }
+        }
+
+        const testRunner = new TestRunner();
+
+        // Test Utilities
+        function assertEqual(actual, expected, message = '') {
+            if (actual !== expected) {
+                throw new Error(`${message} - Expected: ${expected}, Actual: ${actual}`);
+            }
+        }
+
+        function assertApproxEqual(actual, expected, tolerance = 0.01, message = '') {
+            if (Math.abs(actual - expected) > tolerance) {
+                throw new Error(`${message} - Expected: ${expected}, Actual: ${actual} (tolerance: ${tolerance})`);
+            }
+        }
+
+        // Test Data Setup
+        function setupTestData() {
+            // Reset global state
+            selectedUser = users[0];
+            trips = [];
+            currentUsageProfile = usageProfiles[0];
+        }
+
+        // Test Cases
+        testRunner.addTest('Gün Hesaplama Testi', () => {
+            const days1 = calculateDays('2025-08-20', '2025-08-25');
+            assertEqual(days1, 6, 'Gün hesaplama 1');
+
+            const days2 = calculateDays('2025-08-26', '2025-08-28');
+            assertEqual(days2, 3, 'Gün hesaplama 2');
+        });
+
+        testRunner.addTest('Paket Kapsama Kontrolü - Avrupa', () => {
+            setupTestData();
+            trips = [
+                { country_code: 'DE', days: 5 },
+                { country_code: 'GR', days: 3 }
+            ];
+
+            const europePack = roamingPacks.find(p => p.pack_id === 201);
+            const coverage = checkPackageCoverage(europePack);
+
+            assertEqual(coverage.covers_all, true, 'Avrupa paketi tüm ülkeleri kapsamalı');
+            assertEqual(coverage.covered_days, 8, 'Kapsanan gün sayısı');
+        });
+
+        testRunner.addTest('Paket Kapsama Kontrolü - Kısmi Kapsama', () => {
+            setupTestData();
+            trips = [
+                { country_code: 'DE', days: 5 },
+                { country_code: 'US', days: 7 }
+            ];
+
+            const europePack = roamingPacks.find(p => p.pack_id === 201);
+            const coverage = checkPackageCoverage(europePack);
+
+            assertEqual(coverage.covers_all, false, 'Avrupa paketi ABD\'yi kapsamamalı');
+            assertEqual(coverage.covered_days, 5, 'Sadece Almanya günleri kaplanmalı');
+            assertApproxEqual(coverage.partial_coverage, 5/12, 0.01, 'Kısmi kapsama oranı');
+        });
+
+        testRunner.addTest('Pay-as-You-Go Maliyet Hesaplama', () => {
+            setupTestData();
+            trips = [
+                { country_code: 'DE', country_name: 'Germany', days: 6 }
+            ];
+
+            const paygOption = calculatePayAsYouGo(3600, 60, 12);
+            
+            // Expected calculation: 6 days * 600MB * 0.10EUR = 360EUR
+            // + 6 days * 10min * 0.45EUR = 27EUR
+            // + 6 days * 2SMS * 0.20EUR = 2.4EUR
+            // Total: 389.4 EUR
+            assertApproxEqual(paygOption.total_cost, 389.4, 0.1, 'Pay-as-you-go toplam maliyet');
+            assertEqual(paygOption.currency, 'EUR', 'Para birimi');
+        });
+
+        testRunner.addTest('Validity Uyarısı Kontrolü', () => {
+            setupTestData();
+            const totalDays = 15;
+            const pack = roamingPacks.find(p => p.pack_id === 201); // 7 gün validity
+
+            const coverage = { covers_all: true, covered_days: 15, uncovered_trips: [] };
+            const option = calculatePackageOption(pack, totalDays, 2, 150, 30, coverage);
+
+            assertEqual(option.num_packs, 3, 'Gerekli paket sayısı');
+            const hasValidityWarning = option.warnings.some(w => w.includes('geçerliliği'));
+            assertEqual(hasValidityWarning, true, 'Validity uyarısı olmalı');
+        });
+
+        testRunner.addTest('Data Aşımı Hesaplama', () => {
+            setupTestData();
+            const pack = roamingPacks.find(p => p.pack_id === 201); // 5GB
+            const totalDays = 6;
+            const totalDataGB = 7; // 5GB paketten fazla
+
+            const coverage = { covers_all: true, covered_days: 6, uncovered_trips: [] };
+            const option = calculatePackageOption(pack, totalDays, totalDataGB, 30, 6, coverage);
+
+            const hasDataOverage = option.warnings.some(w => w.includes('Data aşımı'));
+            assertEqual(hasDataOverage, true, 'Data aşımı uyarısı olmalı');
+        });
+
+        testRunner.addTest('Döviz Çevirimi', () => {
+            const eurAmount = 100;
+            const tlAmount = eurAmount * exchangeRates['EUR'];
+            assertApproxEqual(tlAmount, 3550, 0.1, 'EUR to TL çevirimi');
+
+            const usdAmount = 100;
+            const tlAmountUsd = usdAmount * exchangeRates['USD'];
+            assertApproxEqual(tlAmountUsd, 3320, 0.1, 'USD to TL çevirimi');
+        });
+
+        testRunner.addTest('Öneri Sıralaması', () => {
+            setupTestData();
+            trips = [
+                { country_code: 'DE', country_name: 'Germany', days: 6 },
+                { country_code: 'GR', country_name: 'Greece', days: 3 }
+            ];
+
+            const recommendations = generateRecommendations();
+            
+            // En az 2 öneri olmalı (pay-as-you-go + en az 1 paket)
+            assertEqual(recommendations.length >= 2, true, 'En az 2 öneri olmalı');
+            
+            // İlk öneri en ucuz olmalı
+            for (let i = 1; i < recommendations.length; i++) {
+                assertEqual(
+                    recommendations[i-1].total_cost_tl <= recommendations[i].total_cost_tl,
+                    true,
+                    'Öneriler maliyet sırasına göre sıralanmalı'
+                );
+            }
+        });
+
+        testRunner.addTest('Global Paket Testi', () => {
+            setupTestData();
+            trips = [
+                { country_code: 'US', days: 5 },
+                { country_code: 'AE', days: 3 }
+            ];
+
+            const globalPack = roamingPacks.find(p => p.coverage === 'Global');
+            const coverage = checkPackageCoverage(globalPack);
+
+            assertEqual(coverage.covers_all, true, 'Global paket tüm ülkeleri kapsamalı');
+        });
+
+        testRunner.addTest('Çoklu Paket Hesaplama', () => {
+            setupTestData();
+            const pack = roamingPacks.find(p => p.pack_id === 201); // 7 gün validity
+            const totalDays = 20;
+
+            const coverage = { covers_all: true, covered_days: 20, uncovered_trips: [] };
+            const option = calculatePackageOption(pack, totalDays, 5, 100, 20, coverage);
+
+            assertEqual(option.num_packs, 3, 'Gerekli paket sayısı: ceil(20/7) = 3');
+            assertApproxEqual(option.total_cost, 3 * pack.price, 5, 'Çoklu paket maliyeti');
+        });
+
+        // Test Runner Function
+        function runAllTests() {
+            testRunner.runAllTests();
+        }
+
+        // Auto-run tests on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            runAllTests();
+        });
+    </script>
+</body>
+</html>
