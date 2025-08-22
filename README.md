@@ -90,9 +90,7 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.open-in-view=false
 spring.jpa.properties.hibernate.format_sql=true
 Uygulamayı Çalıştırma
-bash
-Copy
-Edit
+
 mvn clean spring-boot:run
 # veya
 mvn clean package
@@ -107,9 +105,7 @@ DataLoader, veritabanı boşsa çalışır; tekrar başlatmalarda idempotent dav
 Yeniden tohumlamak için DB’yi temizleyip uygulamayı yeniden başlatın.
 
 FX (Kur) Yapılandırması
-properties
-Copy
-Edit
+
 app.fx.base=TRY
 app.fx.rates.EUR=35.0
 app.fx.rates.USD=33.0
@@ -124,9 +120,6 @@ Endpointler
 POST /api/simulate
 Body (snake_case):
 
-json
-Copy
-Edit
 {
   "user_id": 1001,
   "trips": [
@@ -136,9 +129,6 @@ Edit
 }
 200 Response (örnek):
 
-json
-Copy
-Edit
 {
   "summary": {
     "total_days": 5,
